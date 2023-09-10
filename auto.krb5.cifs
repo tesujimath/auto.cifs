@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 #    auto.cifs 1.2.0 -- Produces automount maps for mounting CIFS shared
 #    drives with Samba. See http://www.mavit.org.uk/auto.cifs.html
