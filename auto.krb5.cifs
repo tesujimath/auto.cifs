@@ -37,21 +37,31 @@ use warnings;
 use strict;
 
 # Work out what share we're after:
-my ( $host, $share, $localuser, $remoteuser );
-if ( $ARGV[0] =~ m/^(.+?):(.+):(.+):(.+)$/ ) {
+my ( $host, $share, $localuser, $remoteuser, $extra_mount_options );
+if ( $ARGV[0] =~ m/^(.+?):(.+):(.+):(.+):(.+)$/ ) {
     $host = $1;
     $share = $2;
     $localuser = $3;
     $remoteuser = $4;
+    $extra_mount_options=",$5";
+}
+elsif ( $ARGV[0] =~ m/^(.+?):(.+):(.+):(.+)$/ ) {
+    $host = $1;
+    $share = $2;
+    $localuser = $3;
+    $remoteuser = $4;
+    $extra_mount_options="";
 }
 elsif ( $ARGV[0] =~ m/^(.+):(.+):(.+)$/ ) {
     $host = $1;
     $share = $2;
     $localuser = $remoteuser = $3;
+    $extra_mount_options="";
 }
 elsif ( $ARGV[0] =~ m/^(.+):(.+)$/ ) {
     $host = $1;
     $share = $2;
+    $extra_mount_options="";
 }
 else {
     die "$0: `$ARGV[0]' is not of the form `host:share', `host:share:user', or `host:share:localuser:remoteuser'\n";
@@ -70,7 +80,7 @@ if ( $localuser ) {
     $gid = $passwd[3];
 
     # STDERR gets logged to syslog by recent versions of autofs.
-    my $mount = "-fstype=cifs,file_mode=0700,dir_mode=0700,uid=$uid,gid=$gid,username=$remoteuser,sec=krb5,cruid=$uid ://$host/$share";
+    my $mount = "-fstype=cifs,file_mode=0700,dir_mode=0700,uid=${uid},gid=${gid},username=${remoteuser},sec=krb5,cruid=${uid}${extra_mount_options} ://$host/$share";
     print STDERR "$0: `$ARGV[0]' mounted using `$mount'\n";
     print STDOUT "$mount\n";
     exit;

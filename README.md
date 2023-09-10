@@ -21,4 +21,5 @@ Various paths are supported:
 host:share
 host:share:user
 host:share:localuser:remoteuser
+host:share:localuser:remoteuser:extra_mount_options
 ```
