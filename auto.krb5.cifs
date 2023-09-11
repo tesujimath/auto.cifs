@@ -64,7 +64,7 @@ elsif ( $ARGV[0] =~ m/^(.+):(.+)$/ ) {
     $extra_mount_options="";
 }
 else {
-    die "$0: `$ARGV[0]' is not of the form `host:share', `host:share:user', or `host:share:localuser:remoteuser'\n";
+    die "$0: `$ARGV[0]' is not of the form `host:share', `host:share:user', `host:share:localuser:remoteuser', or `host:share:localuser:remoteuser:extra_mount_options'\n";
 }
 
 # Escape all non-word characters in sharename:
